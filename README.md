@@ -50,6 +50,74 @@ For the contact form to work, you need to set up the following environment varia
 - `VITE_EMAILJS_TEMPLATE_ID`: Your EmailJS template ID
 - `VITE_EMAILJS_USER_ID`: Your EmailJS user ID
 
+## Screenshots
+
+| Landing / Hero | Project Detail |
+| -------------- | -------------- |
+| ![Hero](./docs/hero.png) | ![Detail](./docs/detail.png) |
+
+Add your own screenshots in the `docs/` folder if you wish.
+
+## Technology Stack
+
+| Layer          | Tech                                    |
+| -------------- | --------------------------------------- |
+| Front-end      | React 18, Vite                          |
+| Styling        | Tailwind CSS, custom CSS modules        |
+| Animations     | Framer Motion                           |
+| Icons          | React Icons                             |
+| Email / Forms  | EmailJS                                 |
+| Deployment     | Netlify (CI)                            |
+
+## Project Structure
+
+```
+portf-web/
+├─ public/              # Static assets (favicons, images)
+├─ src/
+│  ├─ assets/           # Project thumbnails & visuals
+│  ├─ components/       # Re-usable UI widgets
+│  ├─ pages/            # Routed pages (ProjectDetail, …)
+│  ├─ App.jsx           # Main component
+│  ├─ main.jsx          # Vite entry
+│  └─ index.css         # Tailwind base styles
+├─ docs/                # README screenshots (optional)
+└─ …
+```
+
+## Continuous Deployment
+
+Every push to the `main` branch automatically triggers a Netlify build & deploy (see `netlify.toml`).  Preview deploys are generated for PRs.
+
+## Local Environment Variables
+
+Create a `.env` file at the project root:
+
+```
+VITE_EMAILJS_SERVICE_ID=your_service_id
+VITE_EMAILJS_TEMPLATE_ID=your_template_id
+VITE_EMAILJS_USER_ID=your_public_key
+```
+
+## Contributing
+
+1. Fork the repo & create your branch: `git checkout -b feature/your-feature`
+2. Commit your changes: `git commit -m 'Add some feature'`
+3. Push to the branch: `git push origin feature/your-feature`
+4. Open a pull request
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## Contact
+
+Feel free to reach out via the contact form on the site or by emailing **paritosh.dwivedi96@gmail.com**.
+
+---
+
+_Star this repo ⭐ if you find it useful!_
+
 ## Contact Form Setup
 
 The contact form uses EmailJS to send emails without a backend. To set it up:

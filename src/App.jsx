@@ -15,12 +15,7 @@ import emailjs from "emailjs-com";
 // Initialize EmailJS with user ID from environment variables
 emailjs.init(import.meta.env.VITE_EMAILJS_USER_ID);
 
-import {
-  FaGithub,
-  FaLinkedin,
-  FaEnvelope,
-  FaArrowDown,
-} from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaEnvelope, FaArrowDown } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import "./App.css";
 
@@ -31,36 +26,37 @@ function App() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    message: ""
+    message: "",
   });
-  const [formStatus, setFormStatus] = useState('idle');
-  
+  const [formStatus, setFormStatus] = useState("idle");
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormStatus('submitting');
+    setFormStatus("submitting");
 
-    emailjs.send(
-      import.meta.env.VITE_EMAILJS_SERVICE_ID,
-      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-      {
-        from_name: formData.name,
-        reply_to: formData.email,
-        message: formData.message,
-      }
-    )
+    emailjs
+      .send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          reply_to: formData.email,
+          message: formData.message,
+        }
+      )
       .then((response) => {
-        console.log('SUCCESS!', response.status, response.text);
-        setFormStatus('success');
-        setFormData({ name: '', email: '', message: '' });
-        setTimeout(() => setFormStatus('idle'), 5000);
+        console.log("SUCCESS!", response.status, response.text);
+        setFormStatus("success");
+        setFormData({ name: "", email: "", message: "" });
+        setTimeout(() => setFormStatus("idle"), 5000);
       })
       .catch((err) => {
-        console.log('FAILED...', err);
-        setFormStatus('error');
-        setTimeout(() => setFormStatus('idle'), 5000);
+        console.log("FAILED...", err);
+        setFormStatus("error");
+        setTimeout(() => setFormStatus("idle"), 5000);
       });
   };
-  
+
   // Form status is now handled by the string state 'formStatus'
 
   // Track scroll position for potential scroll-based animations
@@ -79,10 +75,10 @@ function App() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { 
-        duration: 0.6, 
+      transition: {
+        duration: 0.6,
         ease: [0.22, 1, 0.36, 1],
-        when: "beforeChildren"
+        when: "beforeChildren",
       },
     },
   };
@@ -93,7 +89,7 @@ function App() {
       opacity: 1,
       transition: {
         staggerChildren: 0.1,
-        delayChildren: 0.2
+        delayChildren: 0.2,
       },
     },
   };
@@ -101,22 +97,22 @@ function App() {
   // New animation variants
   const fadeIn = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
       opacity: 1,
-      transition: { duration: 0.8 }
-    }
+      transition: { duration: 0.8 },
+    },
   };
 
   // Define slideIn for potential future use
-  const _slideIn = (direction = 'left') => ({
-    hidden: { 
-      opacity: 0, 
-      x: direction === 'left' ? -50 : 50 
+  const _slideIn = (direction = "left") => ({
+    hidden: {
+      opacity: 0,
+      x: direction === "left" ? -50 : 50,
     },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       x: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: { duration: 0.6, ease: "easeOut" },
     },
   });
 
@@ -126,25 +122,25 @@ function App() {
     visible: {
       scale: 1,
       opacity: 1,
-      transition: { duration: 0.5, ease: "easeOut" }
+      transition: { duration: 0.5, ease: "easeOut" },
     },
-    hover: { 
+    hover: {
       scale: 1.03,
-      transition: { duration: 0.3 }
+      transition: { duration: 0.3 },
     },
-    tap: { scale: 0.98 }
+    tap: { scale: 0.98 },
   };
 
   const float = {
     initial: { y: 0 },
-    animate: { 
+    animate: {
       y: [-10, 0, -10],
-      transition: { 
-        duration: 4, 
-        repeat: Infinity, 
-        ease: "easeInOut" 
-      } 
-    }
+      transition: {
+        duration: 4,
+        repeat: Infinity,
+        ease: "easeInOut",
+      },
+    },
   };
 
   const textReveal = {
@@ -154,9 +150,9 @@ function App() {
       y: 0,
       transition: {
         delay: 0.1 * i,
-        duration: 0.5
-      }
-    })
+        duration: 0.5,
+      },
+    }),
   };
 
   // Use scrollY for potential scroll-based animations (placeholder for future enhancement)
@@ -172,25 +168,25 @@ function App() {
       {/* Hero Section */}
       <header className="relative h-screen overflow-hidden flex flex-col justify-center items-center px-4">
         {/* Animated background elements */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0 z-0"
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
         >
-          <motion.div 
+          <motion.div
             className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-blue-500 opacity-10 blur-3xl"
             variants={float}
           />
-          <motion.div 
+          <motion.div
             className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-purple-500 opacity-10 blur-3xl"
             variants={{
               ...float,
               animate: {
                 ...float.animate,
                 y: [0, -15, 0],
-                transition: { ...float.animate.transition, delay: 0.5 }
-              }
+                transition: { ...float.animate.transition, delay: 0.5 },
+              },
             }}
           />
         </motion.div>
@@ -238,9 +234,12 @@ function App() {
           >
             {[
               { icon: <FaGithub />, url: "https://github.com/pdwi2020" },
-              { icon: <FaLinkedin />, url: "https://www.linkedin.com/in/paritosh-dwivedi-792120308?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" },
+              {
+                icon: <FaLinkedin />,
+                url: "https://www.linkedin.com/in/paritosh-dwivedi-792120308?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+              },
               { icon: <FaXTwitter />, url: "https://x.com/paritoshDwi223" },
-              { icon: <FaEnvelope />, url: "#contact" }
+              { icon: <FaEnvelope />, url: "#contact" },
             ].map((item, index) => (
               <motion.a
                 key={index}
@@ -259,7 +258,7 @@ function App() {
           </motion.div>
 
           {/* Scroll indicator */}
-          <motion.div 
+          <motion.div
             className="absolute bottom-8 left-1/2 -translate-x-1/2"
             variants={fadeIn}
             initial="hidden"
@@ -274,10 +273,10 @@ function App() {
               transition={{
                 duration: 1.5,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             >
-              <motion.div 
+              <motion.div
                 className="w-1 h-2 bg-gray-400 rounded-full"
                 initial={{ y: 0 }}
                 animate={{
@@ -286,7 +285,7 @@ function App() {
                 transition={{
                   duration: 1.5,
                   repeat: Infinity,
-                  ease: "easeInOut"
+                  ease: "easeInOut",
                 }}
               />
             </motion.div>
@@ -485,10 +484,11 @@ function App() {
                   "Quantitative Finance",
                   "Stochastic Modeling",
                   "Monte Carlo",
-                  "Pandas"
+                  "Pandas",
                 ],
-                github: "https://github.com/pdwi2020/libor_mathematical_modeling",
-                image: "/assets/output18.png"
+                github:
+                  "https://github.com/pdwi2020/libor_mathematical_modeling",
+                image: "/assets/output18.png",
               },
               // Stochastic Deep Learning for Geospatial Data
               {
@@ -502,7 +502,7 @@ function App() {
                   "Deep Ensemble",
                   "Geospatial Analysis",
                   "Uncertainty Quantification",
-                  "Satellite Imagery"
+                  "Satellite Imagery",
                 ],
                 github: "https://github.com/pdwi2020/stochastic-dl-geospatial",
                 image: "/assets/9.png",
@@ -549,7 +549,7 @@ A systematic evaluation demonstrates a clear performance hierarchy, validating t
 | ResNet-18 Ensemble | **95.39%** |
 
 For full confusion matrices, F1-score comparisons, uncertainty plots, and loss landscape visualizations, see the GitHub repository.
-`
+`,
               },
               // LENET5 Image Classifier
               {
@@ -566,19 +566,23 @@ For full confusion matrices, F1-score comparisons, uncertainty plots, and loss l
                   "CNN",
                 ],
                 github: "https://github.com/pdwi2020/LENET5_Image_classifier",
-                image: "/assets/download.png"
+                image: "/assets/download.png",
               },
             ].map((project, index) => (
               <motion.div
                 key={index}
                 className="glass-panel group"
-                style={{ overflow: "hidden", borderRadius: "0.75rem", cursor: "pointer" }}
+                style={{
+                  overflow: "hidden",
+                  borderRadius: "0.75rem",
+                  cursor: "pointer",
+                }}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 onClick={() => {
-                                    navigate(`/project/${index}`, { state: project });
+                  navigate(`/project/${index}`, { state: project });
                 }}
               >
                 <div
@@ -716,19 +720,18 @@ For full confusion matrices, F1-score comparisons, uncertainty plots, and loss l
             </p>
 
             <form className="space-y-6" onSubmit={handleSubmit}>
-              {formStatus === 'success' && (
+              {formStatus === "success" && (
                 <div className="p-4 mb-4 text-sm rounded-lg bg-green-500/20 text-green-400">
                   Your message has been sent successfully!
                 </div>
               )}
-              
-              {formStatus === 'error' && (
+
+              {formStatus === "error" && (
                 <div className="p-4 mb-4 text-sm rounded-lg bg-red-500/20 text-red-400">
                   Failed to send message. Please try again later.
                 </div>
               )}
 
-              
               <div
                 style={{
                   display: "grid",
@@ -737,39 +740,42 @@ For full confusion matrices, F1-score comparisons, uncertainty plots, and loss l
                 }}
               >
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                <label
-                  htmlFor="name"
-                  style={{
-                    display: "block",
-                    fontSize: "0.875rem",
-                    fontWeight: "500",
-                    marginBottom: "0.5rem",
-                  }}
-                >
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  style={{
-                    width: "100%",
-                    background: "var(--glass-bg)",
-                    border: "1px solid var(--glass-border)",
-                    borderRadius: "0.5rem",
-                    padding: "0.75rem",
-                    outline: "none",
-                  }}
-                  placeholder="Your name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  required
-                  onFocus={(e) => {
-                    e.currentTarget.style.boxShadow = "0 0 0 2px rgb(59, 130, 246)";
-                  }}
-                  onBlur={(e) => {
-                    e.currentTarget.style.boxShadow = "none";
-                  }}
-                />
+                  <label
+                    htmlFor="name"
+                    style={{
+                      display: "block",
+                      fontSize: "0.875rem",
+                      fontWeight: "500",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    style={{
+                      width: "100%",
+                      background: "var(--glass-bg)",
+                      border: "1px solid var(--glass-border)",
+                      borderRadius: "0.5rem",
+                      padding: "0.75rem",
+                      outline: "none",
+                    }}
+                    placeholder="Your name"
+                    value={formData.name}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                    required
+                    onFocus={(e) => {
+                      e.currentTarget.style.boxShadow =
+                        "0 0 0 2px rgb(59, 130, 246)";
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.boxShadow = "none";
+                    }}
+                  />
                 </div>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <label
@@ -796,10 +802,13 @@ For full confusion matrices, F1-score comparisons, uncertainty plots, and loss l
                     }}
                     placeholder="your.email@example.com"
                     value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                     required
                     onFocus={(e) => {
-                      e.currentTarget.style.boxShadow = "0 0 0 2px rgb(59, 130, 246)";
+                      e.currentTarget.style.boxShadow =
+                        "0 0 0 2px rgb(59, 130, 246)";
                     }}
                     onBlur={(e) => {
                       e.currentTarget.style.boxShadow = "none";
@@ -833,10 +842,13 @@ For full confusion matrices, F1-score comparisons, uncertainty plots, and loss l
                   }}
                   placeholder="Your message here..."
                   value={formData.message}
-                  onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  onChange={(e) =>
+                    setFormData({ ...formData, message: e.target.value })
+                  }
                   required
                   onFocus={(e) => {
-                    e.currentTarget.style.boxShadow = "0 0 0 2px rgb(59, 130, 246)";
+                    e.currentTarget.style.boxShadow =
+                      "0 0 0 2px rgb(59, 130, 246)";
                   }}
                   onBlur={(e) => {
                     e.currentTarget.style.boxShadow = "none";
@@ -848,29 +860,31 @@ For full confusion matrices, F1-score comparisons, uncertainty plots, and loss l
                 <button
                   type="submit"
                   className="btn btn-primary"
-                  disabled={formStatus === 'submitting'}
+                  disabled={formStatus === "submitting"}
                   style={{
                     width: "100%",
                     maxWidth: "200px",
                     padding: "0.75rem 2rem",
                     margin: "0 auto",
-                    opacity: formStatus === 'submitting' ? 0.7 : 1,
-                    cursor: formStatus === 'submitting' ? "not-allowed" : "pointer"
+                    opacity: formStatus === "submitting" ? 0.7 : 1,
+                    cursor:
+                      formStatus === "submitting" ? "not-allowed" : "pointer",
                   }}
                 >
-                  {formStatus === 'submitting' ? "Sending..." : "Send Message"}
+                  {formStatus === "submitting" ? "Sending..." : "Send Message"}
                 </button>
               </div>
-              
-              {formStatus === 'success' && (
+
+              {formStatus === "success" && (
                 <div className="mt-4 p-3 bg-green-800 bg-opacity-30 border border-green-500 rounded-md text-green-300">
                   Message sent successfully! I'll get back to you soon.
                 </div>
               )}
-              
-              {formStatus === 'error' && (
+
+              {formStatus === "error" && (
                 <div className="mt-4 p-3 bg-red-800 bg-opacity-30 border border-red-500 rounded-md text-red-300">
-                  Failed to send message. Please try again later or contact me directly.
+                  Failed to send message. Please try again later or contact me
+                  directly.
                 </div>
               )}
             </form>
