@@ -30,31 +30,34 @@ function App() {
   });
   const [formStatus, setFormStatus] = useState("idle");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormStatus("submitting");
-
-    emailjs
-      .send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          from_name: formData.name,
-          reply_to: formData.email,
-          message: formData.message,
-        }
-      )
-      .then((response) => {
-        console.log("SUCCESS!", response.status, response.text);
+    const form = e.target;
+    
+    try {
+      setFormStatus("submitting");
+      
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          "form-name": "contact",
+          ...formData
+        }).toString()
+      });
+      
+      if (response.ok) {
         setFormStatus("success");
         setFormData({ name: "", email: "", message: "" });
         setTimeout(() => setFormStatus("idle"), 5000);
-      })
-      .catch((err) => {
-        console.log("FAILED...", err);
-        setFormStatus("error");
-        setTimeout(() => setFormStatus("idle"), 5000);
-      });
+      } else {
+        throw new Error("Form submission failed");
+      }
+    } catch (error) {
+      console.error(error);
+      setFormStatus("error");
+      setTimeout(() => setFormStatus("idle"), 5000);
+    }
   };
 
   // Form status is now handled by the string state 'formStatus'
@@ -490,6 +493,22 @@ function App() {
                   "https://github.com/pdwi2020/libor_mathematical_modeling",
                 image: "/assets/output18.png",
               },
+              // Stochastic Anomaly Detection in Dynamic Networks
+              {
+                title: "Stochastic Anomaly Detection in High-Dimensional Dynamic Networks",
+                description:
+                  "Developed a novel anomaly detection framework for dynamic networks using stochastic modeling and high-dimensional statistical methods, enabling real-time detection of structural anomalies in evolving graph data.",
+                technologies: [
+                  "Python",
+                  "NetworkX",
+                  "PyTorch",
+                  "Stochastic Processes",
+                  "Graph Theory",
+                  "Anomaly Detection"
+                ],
+                github: "https://github.com/pdwi2020/Stoch-Anomaly-Detec-in-Dyn-Net",
+                image: "/assets/output7.png"
+              },
               // Stochastic Deep Learning for Geospatial Data
               {
                 title: "Stochastic Deep Learning for Geospatial Data",
@@ -571,16 +590,21 @@ For full confusion matrices, F1-score comparisons, uncertainty plots, and loss l
             ].map((project, index) => (
               <motion.div
                 key={index}
-                className="glass-panel group"
+                className="glass-panel group relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 hover:-translate-y-1 hover:scale-[1.02] hover:ring-1 hover:ring-blue-500/30"
                 style={{
-                  overflow: "hidden",
-                  borderRadius: "0.75rem",
                   cursor: "pointer",
                 }}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ 
+                  scale: 1.02,
+                  transition: { 
+                    duration: 0.2,
+                    ease: "easeOut"
+                  }
+                }}
                 onClick={() => {
                   navigate(`/project/${index}`, { state: project });
                 }}
@@ -624,14 +648,15 @@ For full confusion matrices, F1-score comparisons, uncertainty plots, and loss l
                     style={{
                       position: "absolute",
                       inset: 0,
-                      backgroundColor: "var(--color-amoled)",
+                      background: "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 50%, transparent 100%)",
                       opacity: 0,
                       display: "flex",
-                      alignItems: "center",
+                      alignItems: "flex-end",
                       justifyContent: "center",
-                      transition: "opacity 0.3s",
+                      transition: "all 0.3s ease-in-out",
+                      padding: "1.5rem",
                     }}
-                    className="group-hover:opacity-80"
+                    className="group-hover:opacity-100"
                   >
                     <a
                       href={
@@ -655,7 +680,7 @@ For full confusion matrices, F1-score comparisons, uncertainty plots, and loss l
                     </a>
                   </div>
                 </div>
-                <div style={{ padding: "1.5rem" }}>
+                <div style={{ padding: "1.5rem" }} className="transition-all duration-300 group-hover:bg-gradient-to-b from-blue-900/10 to-transparent">
                   <h3
                     style={{
                       fontSize: "1.25rem",
@@ -699,6 +724,92 @@ For full confusion matrices, F1-score comparisons, uncertainty plots, and loss l
         </div>
       </section>
 
+      {/* Certifications Section */}
+      <section id="certifications" style={{ padding: "5rem 1rem", background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(9,9,11,0.8) 10%)' }}>
+        <div style={{ maxWidth: "80rem", margin: "0 auto" }}>
+          <motion.h2 
+            className="text-3xl md:text-4xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            Certifications
+          </motion.h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-4 max-w-4xl mx-auto">
+            {[
+              {
+                title: "15.455x: Mathematical Methods for Quantitative Finance",
+                issuer: "MITx",
+                date: "August 2025",
+                skills: ["Stochastic Calculus", "Probability Theory", "Financial Mathematics"],
+                credential: "https://courses.edx.org/certificates/140cef9856a14fc49a5e80368ed32eea",
+                image: "/assets/MITx 15.455x Certificate _ edX.png"
+              },
+              {
+                title: "Computational Methods in Pricing and Model Calibration",
+                issuer: "Columbia University",
+                date: "August 2025",
+                skills: ["Quantitative Finance", "Model Calibration", "Numerical Methods"],
+                credential: "https://coursera.org/verify/D62G4WDCOWBF",
+                image: "/assets/Coursera cert.png"
+              }
+            ].map((cert, index) => (
+              <motion.div
+                key={index}
+                className="glass-panel p-6 rounded-xl shadow-lg transition-all duration-300 border border-transparent flex flex-col h-full relative group"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                whileHover={{ 
+                  y: -5,
+                  boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                  transition: { 
+                    duration: 0.3,
+                    ease: "easeOut"
+                  }
+                }}
+              >
+                <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-blue-500/30 transition-all duration-300 pointer-events-none"></div>
+                <div className="mb-4 overflow-hidden rounded-lg">
+                  <img 
+                    src={cert.image} 
+                    alt={`${cert.title} Certificate`}
+                    className="w-full h-auto object-cover transition-all duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-white group-hover:text-blue-400 transition-colors duration-300">{cert.title}</h3>
+                <p className="text-blue-400 mb-3 group-hover:text-blue-300 transition-colors duration-300">
+                  {cert.issuer} • {cert.date}
+                </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {cert.skills.map((skill, i) => (
+                    <span 
+                      key={i}
+                      className="px-2 py-1 text-xs rounded-full bg-blue-900/30 text-blue-300 border border-blue-800/50 group-hover:bg-blue-800/40 group-hover:border-blue-700/60 transition-colors duration-300"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+                <a
+                  href={cert.credential}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-sm text-blue-400 group-hover:text-blue-300 transition-colors duration-300 group/credential"
+                >
+                  View Credential
+                  <svg className="w-4 h-4 ml-1 transition-transform duration-300 group-hover/credential:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section id="contact" style={{ padding: "5rem 1rem" }}>
         <div style={{ maxWidth: "48rem", margin: "0 auto" }}>
@@ -719,7 +830,20 @@ For full confusion matrices, F1-score comparisons, uncertainty plots, and loss l
               skills and a passion for financial markets, I'd love to connect!
             </p>
 
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form 
+              name="contact" 
+              method="POST" 
+              data-netlify="true"
+              netlify-honeypot="bot-field"
+              className="space-y-6"
+              onSubmit={handleSubmit}
+            >
+              <input type="hidden" name="form-name" value="contact" />
+              <p className="hidden">
+                <label>
+                  Don't fill this out if you're human: <input name="bot-field" />
+                </label>
+              </p>
               {formStatus === "success" && (
                 <div className="p-4 mb-4 text-sm rounded-lg bg-green-500/20 text-green-400">
                   Your message has been sent successfully!
