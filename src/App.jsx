@@ -609,27 +609,15 @@ For full confusion matrices, F1-score comparisons, uncertainty plots, and loss l
                   navigate(`/project/${index}`, { state: project });
                 }}
               >
-                <div
-                  style={{
-                    aspectRatio: "16/9",
-                    background:
-                      "linear-gradient(to bottom right, rgba(59, 130, 246, 0.1), rgba(168, 85, 247, 0.1))",
-                    position: "relative",
-                    overflow: "hidden",
-                  }}
-                >
+                <div className="relative w-full bg-white rounded-t-xl overflow-hidden" style={{ aspectRatio: "16/9" }}>
                   {project.image ? (
-                    <img
-                      src={project.image}
-                      alt={`${project.title} Visualization`}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "contain",
-                        background: "#fff",
-                        display: "block",
-                      }}
-                    />
+                    <div className="w-full h-full flex items-center justify-center p-4">
+                      <img
+                        src={project.image}
+                        alt={`${project.title} Visualization`}
+                        className="max-w-full max-h-full object-contain"
+                      />
+                    </div>
                   ) : (
                     <div
                       style={{
