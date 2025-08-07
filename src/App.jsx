@@ -719,23 +719,18 @@ For full confusion matrices, F1-score comparisons, uncertainty plots, and loss l
               skills and a passion for financial markets, I'd love to connect!
             </p>
 
-            <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" className="space-y-6">
-            <input type="hidden" name="form-name" value="contact" />
-            <p className="hidden">
-              <label>Don’t fill this out: <input name="bot-field" /></label>
-            </p>
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              {formStatus === "success" && (
+                <div className="p-4 mb-4 text-sm rounded-lg bg-green-500/20 text-green-400">
+                  Your message has been sent successfully!
+                </div>
+              )}
 
-            <input type="text" name="name" placeholder="Your Name" required />
-            <input type="email" name="email" placeholder="Your Email" required />
-            <textarea name="message" placeholder="Your Message" required />
-            
-            <button type="submit">Send</button>
-
-            {formStatus === "success" && (
-              <div className="p-4 mb-4 text-sm rounded-lg bg-green-500/20 text-green-400">
-                Your message has been sent successfully!
-              </div>
-            )}
+              {formStatus === "error" && (
+                <div className="p-4 mb-4 text-sm rounded-lg bg-red-500/20 text-red-400">
+                  Failed to send message. Please try again later.
+                </div>
+              )}
 
               <div
                 style={{
