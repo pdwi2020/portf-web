@@ -429,7 +429,7 @@ function App() {
                   "Python",
                   "Pennylane",
                 ],
-                image: "//assets/ablation%20study.png",
+                image: "/assets/ablation%20study.png",
                 github: "https://github.com/pdwi2020/QGNN-CoPE",
               },
               {
@@ -443,7 +443,7 @@ function App() {
                   "Python",
                   "Data Visualization",
                 ],
-                image: "//assets/prob%20forecasts.png",
+                image: "/assets/prob%20forecasts.png",
                 github: "https://github.com/pdwi2020/Cross-asset-neural-model-",
               },
               {
@@ -457,7 +457,7 @@ function App() {
                   "Risk Analysis",
                   "Financial Derivatives",
                 ],
-                image: "//assets/vega%20surface.png",
+                image: "/assets/vega%20surface.png",
                 github: "https://github.com/pdwi2020/monte-carlo-sim-CUDA",
               },
               {
@@ -471,7 +471,7 @@ function App() {
                   "Anomaly Detection",
                   "DeltaCon Algorithm",
                 ],
-                image: "//assets/output4.png",
+                image: "/assets/output4.png",
                 github: "https://github.com/pdwi2020/eth-anomaly-detec",
               },
               // LIBOR Mathematical Modeling
@@ -488,7 +488,7 @@ function App() {
                 ],
                 github:
                   "https://github.com/pdwi2020/libor_mathematical_modeling",
-                image: "//assets/output18.png",
+                image: "/assets/output18.png",
               },
               // Stochastic Deep Learning for Geospatial Data
               {
@@ -505,7 +505,7 @@ function App() {
                   "Satellite Imagery",
                 ],
                 github: "https://github.com/pdwi2020/stochastic-dl-geospatial",
-                image: "//assets/9.png",
+                image: "/assets/9.png",
                 readme: `# A Systematic Evaluation of Deep Learning Architectures for Geospatial Image Classification
 
 This repository contains the code and analysis for a comprehensive study on classifying land-use from satellite imagery using a hierarchy of modern deep learning models. The project evaluates four distinct architectures on the EuroSAT dataset, focusing on performance, predictive uncertainty, computational efficiency, and the geometry of the optimization landscape.
@@ -566,7 +566,7 @@ For full confusion matrices, F1-score comparisons, uncertainty plots, and loss l
                   "CNN",
                 ],
                 github: "https://github.com/pdwi2020/LENET5_Image_classifier",
-                image: "//assets/download.png",
+                image: "/assets/download.png",
               },
             ].map((project, index) => (
               <motion.div
