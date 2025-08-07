@@ -329,7 +329,7 @@ function App() {
                 <div className="aspect-square rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 overflow-hidden">
                   {/* Profile image */}
                   <img
-                    src="//assets/copilot_image_1747795831849.jpg"
+                    src="/assets/copilot_image_1747795831849.jpg"
                     alt="Profile"
                     style={{
                       width: "100%",
