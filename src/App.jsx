@@ -507,7 +507,7 @@ function App() {
                   "Anomaly Detection"
                 ],
                 github: "https://github.com/pdwi2020/Stoch-Anomaly-Detec-in-Dyn-Net",
-                image: "/assets/output7.png"
+                image: "/assets/project-stochastic.png"
               },
               // Stochastic Deep Learning for Geospatial Data
               {
@@ -745,7 +745,7 @@ For full confusion matrices, F1-score comparisons, uncertainty plots, and loss l
                 date: "August 2025",
                 skills: ["Stochastic Calculus", "Probability Theory", "Financial Mathematics"],
                 credential: "https://courses.edx.org/certificates/140cef9856a14fc49a5e80368ed32eea",
-                image: "/assets/MITx 15.455x Certificate _ edX.png"
+                image: "/assets/mitx-certificate.png"
               },
               {
                 title: "Computational Methods in Pricing and Model Calibration",
@@ -753,7 +753,7 @@ For full confusion matrices, F1-score comparisons, uncertainty plots, and loss l
                 date: "August 2025",
                 skills: ["Quantitative Finance", "Model Calibration", "Numerical Methods"],
                 credential: "https://coursera.org/verify/D62G4WDCOWBF",
-                image: "/assets/Coursera cert.png"
+                image: "/assets/coursera-cert.png"
               }
             ].map((cert, index) => (
               <motion.div
