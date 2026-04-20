@@ -18,6 +18,10 @@ emailjs.init(import.meta.env.VITE_EMAILJS_USER_ID);
 import { FaGithub, FaLinkedin, FaEnvelope, FaArrowDown } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import "./App.css";
+import {
+  previousResearchProjects,
+  quantPortfolioProjects,
+} from "./data/projects";
 
 function App() {
   const navigate = useNavigate();
@@ -32,7 +36,6 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const form = e.target;
     
     try {
       setFormStatus("submitting");
@@ -118,6 +121,125 @@ function App() {
       transition: { duration: 0.6, ease: "easeOut" },
     },
   });
+
+  const renderProjectGrid = (projectList) =>
+    projectList.map((project, index) => (
+      <motion.div
+        key={project.id}
+        className="glass-panel group relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 hover:-translate-y-1 hover:scale-[1.02] hover:ring-1 hover:ring-blue-500/30"
+        style={{
+          cursor: "pointer",
+        }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: index * 0.1 }}
+        whileHover={{
+          scale: 1.02,
+          transition: {
+            duration: 0.2,
+            ease: "easeOut",
+          },
+        }}
+        onClick={() => {
+          navigate(`/project/${project.id}`, { state: project });
+        }}
+      >
+        <div
+          className="relative w-full bg-white rounded-t-xl overflow-hidden"
+          style={{ aspectRatio: "16/9" }}
+        >
+          {project.image ? (
+            <div className="w-full h-full flex items-center justify-center p-4">
+              <img
+                src={project.image}
+                alt={`${project.title} Visualization`}
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
+          ) : (
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "rgba(156, 163, 175, 1)",
+              }}
+            >
+              {project.title} Visualization
+            </div>
+          )}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 50%, transparent 100%)",
+              opacity: 0,
+              display: "flex",
+              alignItems: "flex-end",
+              justifyContent: "center",
+              transition: "all 0.3s ease-in-out",
+              padding: "1.5rem",
+            }}
+            className="group-hover:opacity-100"
+          >
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary"
+              style={{ fontSize: "0.875rem" }}
+            >
+              View on GitHub
+            </a>
+          </div>
+        </div>
+        <div
+          style={{ padding: "1.5rem" }}
+          className="transition-all duration-300 group-hover:bg-gradient-to-b from-blue-900/10 to-transparent"
+        >
+          <h3
+            style={{
+              fontSize: "1.25rem",
+              fontWeight: "700",
+              marginBottom: "0.5rem",
+            }}
+          >
+            {project.title}
+          </h3>
+          <p
+            style={{
+              color: "rgba(209, 213, 219, 1)",
+              fontSize: "0.875rem",
+              marginBottom: "1rem",
+            }}
+          >
+            {project.description}
+          </p>
+          <div
+            style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}
+          >
+            {project.technologies.map((tech, techIndex) => (
+              <span
+                key={techIndex}
+                style={{
+                  padding: "0.25rem 0.5rem",
+                  background: "var(--glass-bg)",
+                  border: "1px solid var(--glass-border)",
+                  borderRadius: "9999px",
+                  fontSize: "0.75rem",
+                }}
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+    ));
 
   // Define scaleUp for potential future use
   const _scaleUp = {
@@ -416,210 +538,68 @@ function App() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-              gap: "2rem",
+              gap: "2.5rem",
             }}
           >
-            {[
-              {
-                title: "P2 — Avellaneda-Stoikov HFT Market Maker (Flagship)",
-                description:
-                  "End-to-end HFT market-making policy: derived the HJB dynamic-programming equation from Ho-Stoll utility through a queue-reactive correction and a Glosten-Milgrom Bayesian adverse-selection layer (3045-word appendix), validated on LOBSTER AAPL 2012-06-21 replay with inventory hard limits enforced by quote suppression (≈$662 PnL on 972 fills, ~7.9% spread capture). Shared accounting across simulator and replay. 46 passing tests.",
-                technologies: [
-                  "Python 3.14",
-                  "HJB Control",
-                  "LOBSTER",
-                  "Poisson LOB",
-                  "Glosten-Milgrom",
-                  "Queue-Reactive",
-                ],
-                image: "/assets/prob%20forecasts.png",
-                github: "https://github.com/pdwi2020/p2_market_maker",
-              },
-              {
-                title:
-                  "P5 — GPU-Accelerated Monte Carlo for Exotic Options (Flagship)",
-                description:
-                  "Full-matrix Monte Carlo benchmark across GBM / Heston / Bates / Heston-Hull-White with standard MC, Sobol QMC, and MLMC. Tesla T4 vs CPU: 12x Heston, 8x HHW, 6x Bates, 3x GBM. Malliavin integration-by-parts Greeks (Fournié 1999) for Asian/lookback/barrier. Honest negative: Sobol QMC on Bates jump payoffs ~1.2x because indicator discontinuities blunt variance reduction. 75 passing tests.",
-                technologies: [
-                  "CUDA",
-                  "PyTorch",
-                  "MLMC",
-                  "Sobol QMC",
-                  "Malliavin Greeks",
-                  "Carr-Madan FFT",
-                ],
-                image: "/assets/vega%20surface.png",
-                github: "https://github.com/pdwi2020/p5_gpu_mc_exotics",
-              },
-              {
-                title:
-                  "P1 — Cross-Sectional Equity Factor Research on Russell 3000",
-                description:
-                  "12-1 momentum decile spread on real 2,539-name Russell-3000 panel (1.25M rows, 2024-04-19 to 2026-04-17). Gross daily Sharpe 0.30, net 0.26 after 5+2 bps, Newey-West t-stat 0.43, deflated Sharpe (Bailey) 1.00. BARRA variance decomposition: style 80.3% / sector 4.4% / specific 15.3%. Almgren-Chriss capacity sweep does not bracket break-even within $1M-$1B, a sweep-range limitation rather than an overclaim. 83 passing tests.",
-                technologies: [
-                  "Python",
-                  "Pandas",
-                  "BARRA Risk",
-                  "Almgren-Chriss",
-                  "Deflated Sharpe",
-                  "Walk-Forward CV",
-                ],
-                image: "/assets/output4.png",
-                github: "https://github.com/pdwi2020/p1_factor_research",
-              },
-              {
-                title:
-                  "P4 — S&P 500 Statistical Arbitrage with Multiple-Testing Rigor",
-                description:
-                  "Market-neutral pair + 3-asset basket stat-arb with Engle-Granger + Johansen cointegration, static OU, Kalman-OU, neural OU, and regime-switching OU baselines. Deflated with Bonferroni + BH + BY + Storey + Hansen SPA + White Reality Check. 4-way OU ablation across 16 validated pairs: regime 1.07 > static 0.95 > Kalman 0.75 > neural 0.36 (median net Sharpe). Honest caveat: n=16 is too small for a Hansen SPA method-choice claim. 60 passing tests.",
-                technologies: [
-                  "Python",
-                  "Johansen",
-                  "Kalman-OU",
-                  "Hansen SPA",
-                  "White Reality Check",
-                  "Regime-Switching",
-                ],
-                image: "/assets/project-stochastic.png",
-                github: "https://github.com/pdwi2020/p4_stat_arb",
-              },
-              {
-                title: "P3 — Volatility Surface Dynamics & Forecasting",
-                description:
-                  "SVI + SSVI + rBergomi calibration on a bundled SPY option panel (PCA PC1 explains 99% of surface variance) plus a HAR-RV vs GARCH(1,1) horserace on a 125-day SPY realized-vol window using MSE + QLIKE losses. At h=1 and h=22 GARCH wins; h=5 is very close. Daily SPY snapshot accrual via macOS LaunchAgent. 55 passing + 2 skipped (MPS float64).",
-                technologies: [
-                  "Python",
-                  "SVI / SSVI",
-                  "rBergomi",
-                  "HAR-RV",
-                  "GARCH(1,1)",
-                  "PCA",
-                ],
-                image: "/assets/ablation%20study.png",
-                github: "https://github.com/pdwi2020/p3_vol_surface",
-              },
-            ].map((project, index) => (
-              <motion.div
-                key={index}
-                className="glass-panel group relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 hover:-translate-y-1 hover:scale-[1.02] hover:ring-1 hover:ring-blue-500/30"
+            <div>
+              <h3
                 style={{
-                  cursor: "pointer",
-                }}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ 
-                  scale: 1.02,
-                  transition: { 
-                    duration: 0.2,
-                    ease: "easeOut"
-                  }
-                }}
-                onClick={() => {
-                  navigate(`/project/${index}`, { state: project });
+                  fontSize: "1.375rem",
+                  fontWeight: "700",
+                  marginBottom: "1rem",
                 }}
               >
-                <div className="relative w-full bg-white rounded-t-xl overflow-hidden" style={{ aspectRatio: "16/9" }}>
-                  {project.image ? (
-                    <div className="w-full h-full flex items-center justify-center p-4">
-                      <img
-                        src={project.image}
-                        alt={`${project.title} Visualization`}
-                        className="max-w-full max-h-full object-contain"
-                      />
-                    </div>
-                  ) : (
-                    <div
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: "rgba(156, 163, 175, 1)",
-                      }}
-                    >
-                      {project.title} Visualization
-                    </div>
-                  )}
-                  <div
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      background: "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 50%, transparent 100%)",
-                      opacity: 0,
-                      display: "flex",
-                      alignItems: "flex-end",
-                      justifyContent: "center",
-                      transition: "all 0.3s ease-in-out",
-                      padding: "1.5rem",
-                    }}
-                    className="group-hover:opacity-100"
-                  >
-                    <a
-                      href={
-                        project.github ||
-                        (index === 0
-                          ? "https://github.com/pdwi2020/QGNN-CoPE"
-                          : index === 1
-                          ? "https://github.com/pdwi2020/Cross-asset-neural-model-"
-                          : index === 2
-                          ? "https://github.com/pdwi2020/monte-carlo-sim-CUDA"
-                          : index === 3
-                          ? "https://github.com/pdwi2020/eth-anomaly-detec"
-                          : "")
-                      }
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn btn-primary"
-                      style={{ fontSize: "0.875rem" }}
-                    >
-                      View on GitHub
-                    </a>
-                  </div>
-                </div>
-                <div style={{ padding: "1.5rem" }} className="transition-all duration-300 group-hover:bg-gradient-to-b from-blue-900/10 to-transparent">
-                  <h3
-                    style={{
-                      fontSize: "1.25rem",
-                      fontWeight: "700",
-                      marginBottom: "0.5rem",
-                    }}
-                  >
-                    {project.title}
-                  </h3>
-                  <p
-                    style={{
-                      color: "rgba(209, 213, 219, 1)",
-                      fontSize: "0.875rem",
-                      marginBottom: "1rem",
-                    }}
-                  >
-                    {project.description}
-                  </p>
-                  <div
-                    style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}
-                  >
-                    {project.technologies.map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        style={{
-                          padding: "0.25rem 0.5rem",
-                          background: "var(--glass-bg)",
-                          border: "1px solid var(--glass-border)",
-                          borderRadius: "9999px",
-                          fontSize: "0.75rem",
-                        }}
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+                Quant Research Portfolio
+              </h3>
+              <p
+                style={{
+                  color: "rgba(156, 163, 175, 1)",
+                  marginBottom: "1.5rem",
+                }}
+              >
+                The five-project buy-side QR internship portfolio from `P1` to
+                `P5`.
+              </p>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+                  gap: "2rem",
+                }}
+              >
+                {renderProjectGrid(quantPortfolioProjects)}
+              </div>
+            </div>
+
+            <div>
+              <h3
+                style={{
+                  fontSize: "1.375rem",
+                  fontWeight: "700",
+                  marginBottom: "1rem",
+                }}
+              >
+                Earlier Research Projects
+              </h3>
+              <p
+                style={{
+                  color: "rgba(156, 163, 175, 1)",
+                  marginBottom: "1.5rem",
+                }}
+              >
+                Previous research and modeling projects that were on the site
+                before the dedicated `P1` to `P5` portfolio.
+              </p>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+                  gap: "2rem",
+                }}
+              >
+                {renderProjectGrid(previousResearchProjects)}
+              </div>
+            </div>
           </div>
         </div>
       </section>

@@ -1,14 +1,17 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { marked } from "marked";
 import React from "react";
+import { projects } from "../data/projects";
 
 export default function ProjectDetail() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const { id } = useParams();
 
-  const project = state || null;
+  const projectFromId = projects.find((candidate) => candidate.id === id) || null;
+  const project = state?.id === id ? state : projectFromId;
 
   // initialise readmeHtml if embedded
   const [readmeHtml, setReadmeHtml] = React.useState(
@@ -19,6 +22,8 @@ export default function ProjectDetail() {
   React.useEffect(() => {
     const fetchReadme = async () => {
       if (!project?.github) return;
+      setReadmeError(null);
+      setReadmeHtml(project.readme ? marked.parse(project.readme) : null);
       const repoPath = project.github.replace("https://github.com/", "");
       const tryBranches = ["main", "master"];
       for (const branch of tryBranches) {
@@ -35,7 +40,7 @@ export default function ProjectDetail() {
             setReadmeHtml(html);
             return;
           }
-        } catch (err) {
+        } catch {
           // continue to next branch
         }
       }
@@ -45,9 +50,13 @@ export default function ProjectDetail() {
     fetchReadme();
   }, [project]);
 
+  React.useEffect(() => {
     if (!project) {
-    // If state is missing (e.g., direct navigation), redirect to home
-    navigate("/", { replace: true });
+      navigate("/", { replace: true });
+    }
+  }, [navigate, project]);
+
+  if (!project) {
     return null;
   }
 
