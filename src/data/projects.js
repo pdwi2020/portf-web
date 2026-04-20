@@ -12,7 +12,8 @@ export const quantPortfolioProjects = [
       "Glosten-Milgrom",
       "Queue-Reactive",
     ],
-    image: "/assets/prob%20forecasts.png",
+    image:
+      "https://raw.githubusercontent.com/pdwi2020/p2_market_maker/master/results/readme_figures/lobster_pnl_curve.png",
     github: "https://github.com/pdwi2020/p2_market_maker",
   },
   {
@@ -28,7 +29,8 @@ export const quantPortfolioProjects = [
       "Malliavin Greeks",
       "Carr-Madan FFT",
     ],
-    image: "/assets/vega%20surface.png",
+    image:
+      "https://raw.githubusercontent.com/pdwi2020/p5_gpu_mc_exotics/master/results/full_local_matrix/cuda_speedup.png",
     github: "https://github.com/pdwi2020/p5_gpu_mc_exotics",
   },
   {
@@ -44,7 +46,8 @@ export const quantPortfolioProjects = [
       "Deflated Sharpe",
       "Walk-Forward CV",
     ],
-    image: "/assets/output4.png",
+    image:
+      "https://raw.githubusercontent.com/pdwi2020/p1_factor_research/master/results/readme_figures/momentum_decile_spread.png",
     github: "https://github.com/pdwi2020/p1_factor_research",
   },
   {
@@ -60,7 +63,8 @@ export const quantPortfolioProjects = [
       "White Reality Check",
       "Regime-Switching",
     ],
-    image: "/assets/project-stochastic.png",
+    image:
+      "https://raw.githubusercontent.com/pdwi2020/p4_stat_arb/master/results/ou_ablation/ou_ablation_sharpe.png",
     github: "https://github.com/pdwi2020/p4_stat_arb",
   },
   {
@@ -76,7 +80,8 @@ export const quantPortfolioProjects = [
       "GARCH(1,1)",
       "PCA",
     ],
-    image: "/assets/ablation%20study.png",
+    image:
+      "https://raw.githubusercontent.com/pdwi2020/p3_vol_surface/master/results/fixture_ssvi/pca_explained_variance.png",
     github: "https://github.com/pdwi2020/p3_vol_surface",
   },
 ];
