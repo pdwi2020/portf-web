@@ -978,11 +978,12 @@ function App() {
       const keyMetrics = metricMatches.slice(0, 2); // at most 2 for clean UI
 
       const itemKey = keyPrefix ? `${keyPrefix}-${project.id}` : project.id;
+      const isDuplicateSet = keyPrefix && !keyPrefix.endsWith('1');
 
       return (
       <motion.div
         key={itemKey}
-        className="bento-card bento-hover-refined premium-panel group relative overflow-hidden rounded-2xl shadow-xl cursor-pointer border border-white/5 glow-cyan grain premium-hover stagger-item project-card-item glowing-effect"
+        className={`bento-card bento-hover-refined premium-panel group relative overflow-hidden rounded-2xl shadow-xl cursor-pointer border border-white/5 glow-cyan grain premium-hover stagger-item project-card-item glowing-effect${isDuplicateSet ? ' project-card-duplicate' : ''}`}
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -1353,13 +1354,13 @@ function App() {
           </motion.h2>
 
           <div
-            className="w-full"
+            className="project-sections-stack w-full min-w-0"
             style={{
               display: "grid",
               gap: "2.5rem",
             }}
           >
-            <div className="w-full">
+            <div className="project-section-block w-full min-w-0">
               <h3
                 style={{
                   fontSize: "1.375rem",
@@ -1399,7 +1400,7 @@ function App() {
                  Multiple duplicated lists (4 copies) + 25% shift animation so the repeat is not noticeable (fixes visible seam/repeat after ~P3 with only 5 unique items).
                  Looks like continuous infinite flow just like the Earlier Research Projects section (which has more unique items so 2 copies suffice).
                  Pause on hover. Same project-card-item, overflow-hidden + aurora-mesh wrappers. Keeps all canvas thumbnails (with live particles), hovers, metrics, etc. */}
-              <div className="overflow-hidden w-full aurora-mesh">
+              <div className="project-carousel-shell overflow-hidden w-full aurora-mesh">
                 <div
                   className="project-cards-scroller quant-infinite"
                   style={{ '--duration': '45s' }}
@@ -1412,7 +1413,7 @@ function App() {
               </div>
             </div>
 
-            <div className="w-full">
+            <div className="project-section-block w-full min-w-0">
               <h3
                 style={{
                   fontSize: "1.375rem",
@@ -1423,7 +1424,7 @@ function App() {
                 Earlier Research Projects
               </h3>
               {/* Horizontal scroll shuffle for earlier projects (same as above, infinite scroll shuffle implementation). */}
-              <div className="overflow-hidden w-full aurora-mesh">
+              <div className="project-carousel-shell overflow-hidden w-full aurora-mesh">
                 <div
                   className="project-cards-scroller"
                   style={{ '--duration': '45s' }}

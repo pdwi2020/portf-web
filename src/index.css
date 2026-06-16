@@ -414,6 +414,19 @@ h3 {
   animation-play-state: paused;
 }
 
+.project-carousel-shell {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.project-sections-stack,
+.project-section-block {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
 /* Quant-specific infinite scroller (more copies for small unique list of 5 flagship projects) */
 .project-cards-scroller.quant-infinite {
   animation: project-cards-scroll-quant var(--duration, 45s) linear infinite;
@@ -1471,6 +1484,20 @@ h2.luminous-text:hover,
    - Preserves pure #000 AMOLED, all luminous cyan glows, glass, canvas fidelity, and existing desktop interactions.
 */
 @media (max-width: 768px), (pointer: coarse) {
+  html,
+  body,
+  #root {
+    max-width: 100%;
+  }
+  body {
+    overflow-x: clip;
+  }
+  @supports not (overflow: clip) {
+    body {
+      overflow-x: hidden;
+    }
+  }
+
   /* Touch-friendly interactive targets */
   .pill,
   .pill-primary {
@@ -1504,39 +1531,56 @@ h2.luminous-text:hover,
     margin-top: 0.25rem;
   }
 
-  /* Project cards scroller: enable native swipe + snap on mobile/touch; slow the auto marquee so it doesn't fight the user.
-     On phones, use smaller cards so 2+ can peek and it doesn't feel "large" or overwhelming on small screens. */
-  .project-cards-scroller {
-    animation-duration: 68s !important; /* slower auto on mobile */
-    -webkit-overflow-scrolling: touch;
-    gap: 0.5rem;
-  }
-  .project-card-item {
-    min-width: 155px;
-    scroll-snap-align: start;
-  }
-  /* Container becomes swipeable when on coarse */
-  .overflow-hidden.w-full.aurora-mesh {
-    overflow-x: auto;
+  /* Project cards: convert the desktop infinite marquee into a real phone carousel.
+     The desktop tracks are duplicated for seamless animation; on phones that oversized track
+     causes fitting/bleed issues, so we hide duplicate sets and use viewport-bounded snap cards. */
+  .project-carousel-shell {
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto !important;
+    overflow-y: visible;
     scroll-snap-type: x mandatory;
+    scroll-padding-inline: 0.75rem;
+    overscroll-behavior-x: contain;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
-  .overflow-hidden.w-full.aurora-mesh::-webkit-scrollbar {
+  .project-carousel-shell::-webkit-scrollbar {
     display: none;
+  }
+  .project-carousel-shell .project-cards-scroller,
+  .project-carousel-shell .project-cards-scroller.quant-infinite {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto;
+    width: max-content;
+    max-width: none;
+    gap: 0.75rem;
+    padding: 0 0.75rem 0.6rem 0.75rem;
+  }
+  .project-carousel-shell .project-card-duplicate {
+    display: none !important;
+  }
+  .project-carousel-shell .project-card-item {
+    box-sizing: border-box;
+    flex: 0 0 clamp(230px, 78vw, 292px);
+    min-width: clamp(230px, 78vw, 292px);
+    max-width: clamp(230px, 78vw, 292px);
+    scroll-snap-align: start;
   }
 
   /* Tighter project cards specifically on phones (the general .p-4/.bento padding overrides are too generous for these thumbnail cards) */
-  .project-card-item.bento-card,
-  .project-card-item {
-    padding: 0.35rem !important;
+  .project-carousel-shell .project-card-item.bento-card,
+  .project-carousel-shell .project-card-item {
+    padding: 0.45rem !important;
   }
-  .project-card-item .p-3,
-  .project-card-item .p-4 {
-    padding: 0.5rem !important;
+  .project-carousel-shell .project-card-item .p-3,
+  .project-carousel-shell .project-card-item .p-4 {
+    padding: 0.65rem !important;
   }
-  .project-card-item h3 {
-    font-size: 0.78rem;
+  .project-carousel-shell .project-card-item h3 {
+    font-size: 0.86rem;
+    line-height: 1.2;
   }
 
   /* Repo marquee ticker: pause auto on touch devices (user can still read while swiping container) */
