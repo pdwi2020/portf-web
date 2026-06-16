@@ -1019,25 +1019,25 @@ function App() {
           </a>
         </div>
 
-        <div className="p-4">
-          <div className="flex flex-wrap items-center gap-2 mb-3">
+        <div className="p-3 sm:p-4">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
             <span className="bento-meta">{missionLabel}</span>
             <span className="pill pill-small text-[#a1a1aa]">{evidenceLabel}</span>
             {keyMetrics.length > 0 && keyMetrics.map((m, mi) => (
               <span key={mi} className="pill pill-small text-[#00f0ff]/90 border border-[#00f0ff]/30">{m}</span>
             ))}
           </div>
-          <h3 className="text-[16px] font-semibold tracking-[-0.2px] mb-1.5 text-white group-hover:text-[#00f0ff] transition-colors lamp-effect">
+          <h3 className="text-sm sm:text-[16px] font-semibold tracking-[-0.2px] mb-1 text-white group-hover:text-[#00f0ff] transition-colors lamp-effect">
             {project.title}
           </h3>
-          <p className="text-[#a1a1aa] text-sm line-clamp-4 mb-3 leading-snug">
+          <p className="text-[#a1a1aa] text-xs sm:text-sm line-clamp-3 sm:line-clamp-4 mb-2 sm:mb-3 leading-snug">
             {project.description}
           </p>
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-1 sm:gap-1.5">
             {project.technologies.slice(0, 6).map((tech, techIndex) => (
               <motion.span
                 key={techIndex}
-                className="pill pill-small text-[#a1a1aa] glow-cyan"
+                className="pill pill-small text-[10px] sm:text-xs text-[#a1a1aa] glow-cyan"
                 whileHover={{
                   scale: 1.08,
                   y: -2,
@@ -1055,7 +1055,7 @@ function App() {
             onClick={(e) => e.stopPropagation()}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-[11px] text-[#00f0ff]/80 hover:text-[#00f0ff] mt-3 transition-colors moving-border"
+            className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] text-[#00f0ff]/80 hover:text-[#00f0ff] mt-2 sm:mt-3 transition-colors moving-border"
           >
             VIEW FULL REPO <span aria-hidden="true">↗</span>
           </a>

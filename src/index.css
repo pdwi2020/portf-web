@@ -1504,12 +1504,15 @@ h2.luminous-text:hover,
     margin-top: 0.25rem;
   }
 
-  /* Project cards scroller: enable native swipe + snap on mobile/touch; slow the auto marquee so it doesn't fight the user */
+  /* Project cards scroller: enable native swipe + snap on mobile/touch; slow the auto marquee so it doesn't fight the user.
+     On phones, use smaller cards so 2+ can peek and it doesn't feel "large" or overwhelming on small screens. */
   .project-cards-scroller {
     animation-duration: 68s !important; /* slower auto on mobile */
     -webkit-overflow-scrolling: touch;
+    gap: 0.5rem;
   }
   .project-card-item {
+    min-width: 155px;
     scroll-snap-align: start;
   }
   /* Container becomes swipeable when on coarse */
@@ -1521,6 +1524,19 @@ h2.luminous-text:hover,
   }
   .overflow-hidden.w-full.aurora-mesh::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Tighter project cards specifically on phones (the general .p-4/.bento padding overrides are too generous for these thumbnail cards) */
+  .project-card-item.bento-card,
+  .project-card-item {
+    padding: 0.35rem !important;
+  }
+  .project-card-item .p-3,
+  .project-card-item .p-4 {
+    padding: 0.5rem !important;
+  }
+  .project-card-item h3 {
+    font-size: 0.78rem;
   }
 
   /* Repo marquee ticker: pause auto on touch devices (user can still read while swiping container) */
