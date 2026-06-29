@@ -1542,13 +1542,16 @@ h2.luminous-text:hover,
   }
   .project-carousel-shell .project-cards-scroller,
   .project-carousel-shell .project-cards-scroller.quant-infinite {
-    animation-duration: 32s !important;
+    animation-duration: 26s !important;
     animation-play-state: running;
     will-change: transform;
     width: max-content;
     max-width: none;
     gap: 0.75rem;
     padding: 0 0.75rem 0.6rem 0.75rem;
+  }
+  .project-carousel-shell .project-cards-scroller.quant-infinite {
+    animation-duration: 20s !important;
   }
   .project-carousel-shell:active .project-cards-scroller {
     animation-play-state: paused;

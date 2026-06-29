@@ -1403,7 +1403,7 @@ function App() {
               <div className="project-carousel-shell overflow-hidden w-full aurora-mesh">
                 <div
                   className="project-cards-scroller quant-infinite"
-                  style={{ '--duration': '45s' }}
+                  style={{ '--duration': '26s' }}
                 >
                   {renderProjectGrid(quantPortfolioProjects, 'quant1')}
                   {renderProjectGrid(quantPortfolioProjects, 'quant2')}
@@ -1427,7 +1427,7 @@ function App() {
               <div className="project-carousel-shell overflow-hidden w-full aurora-mesh">
                 <div
                   className="project-cards-scroller"
-                  style={{ '--duration': '45s' }}
+                  style={{ '--duration': '38s' }}
                 >
                   {renderProjectGrid(previousResearchProjects, 'earlier1')}
                   {renderProjectGrid(previousResearchProjects, 'earlier2')}
